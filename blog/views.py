@@ -6,7 +6,9 @@ from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from django.core.paginator import EmptyPage, Paginator
 from django.db.models import Count, Q
+from django.template.loader import render_to_string
 from django.utils import timezone
 from datetime import timedelta
 from .models import (
@@ -33,6 +35,85 @@ FEED_TIMEFRAMES = {
     'month': timedelta(days=30),
     'year': timedelta(days=365),
 }
+FEED_PAGE_SIZE = 9
+
+
+def _is_ajax(request):
+    return request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+
+def _paginate_feed(request, posts_qs):
+    """
+    Paginate annotated feed posts.
+    Returns (posts_list, has_next, next_page_number).
+    Out-of-range pages yield an empty list so infinite scroll does not duplicate cards.
+    """
+    paginator = Paginator(posts_qs, FEED_PAGE_SIZE)
+    raw_page = request.GET.get('page') or 1
+    try:
+        page_number = max(1, int(raw_page))
+    except (TypeError, ValueError):
+        page_number = 1
+
+    try:
+        page_obj = paginator.page(page_number)
+    except EmptyPage:
+        return [], False, None
+
+    has_next = page_obj.has_next()
+    next_page = page_obj.next_page_number() if has_next else None
+    return list(page_obj.object_list), has_next, next_page
+
+
+def _feed_ajax_response(request, posts, has_next, next_page):
+    html = render_to_string(
+        'blog/includes/feed_posts.html',
+        {'posts': posts},
+        request=request,
+    )
+    return JsonResponse({
+        'html': html,
+        'has_next': has_next,
+        'next_page': next_page,
+    })
+
+
+def _render_feed_page(request, qs, *, selected_tag=None, search_query=None, feed_heading=None):
+    """Shared home / tag feed rendering with optional AJAX pagination."""
+    qs, sort, timeframe, feed_mode, tag, query = _build_feed_queryset(request, qs)
+    if selected_tag is not None:
+        tag = selected_tag
+    if search_query is not None:
+        query = search_query
+
+    annotated_qs = _annotate_feed_posts(qs, request.user, as_list=False)
+    posts, has_next, next_page = _paginate_feed(request, annotated_qs)
+    posts = _attach_user_liked(posts, request.user)
+
+    if _is_ajax(request):
+        return _feed_ajax_response(request, posts, has_next, next_page)
+
+    announcements = Announcement.objects.filter(
+        is_active=True, created_by__profile__role='admin'
+    )
+    context = {
+        'posts': posts,
+        'has_next': has_next,
+        'next_page': next_page,
+        'announcements': announcements,
+        'feed_sort': sort,
+        'feed_timeframe': timeframe,
+        'feed_mode': feed_mode,
+        'selected_tag': tag or '',
+        'search_query': query or '',
+        'feed_heading': feed_heading or _feed_heading(
+            sort,
+            timeframe,
+            selected_tag=tag or None,
+            query=query or None,
+        ),
+    }
+    return render(request, 'blog/index.html', context)
 
 
 def _feed_timeframe_cutoff(timeframe):
@@ -72,13 +153,20 @@ def _build_feed_queryset(request, base_qs=None):
     return qs, sort, timeframe, feed_mode, tag, query
 
 
-def _annotate_feed_posts(queryset, user):
-    posts = list(
-        queryset.annotate(
-            likes=Count('post_likes', distinct=True),
-            comments_count=Count('comments', distinct=True),
-        ).select_related('author', 'author__profile').prefetch_related('comments__author')
-    )
+def _annotate_feed_posts(queryset, user, *, as_list=True):
+    """Annotate posts with like/comment counts and optional user_liked flags."""
+    qs = queryset.annotate(
+        likes=Count('post_likes', distinct=True),
+        comments_count=Count('comments', distinct=True),
+    ).select_related('author', 'author__profile').prefetch_related('comments__author')
+
+    if not as_list:
+        return qs
+
+    return _attach_user_liked(list(qs), user)
+
+
+def _attach_user_liked(posts, user):
     liked_ids = set()
     if user.is_authenticated and posts:
         liked_ids = set(
@@ -181,21 +269,7 @@ def logout_view(request):
 
 def home(request):
     """Home/blog feed view — chronological newest-first by default."""
-    qs, sort, timeframe, feed_mode, tag, query = _build_feed_queryset(request)
-    posts = _annotate_feed_posts(qs, request.user)
-    announcements = Announcement.objects.filter(is_active=True, created_by__profile__role='admin')
-
-    context = {
-        'posts': posts,
-        'announcements': announcements,
-        'feed_sort': sort,
-        'feed_timeframe': timeframe,
-        'feed_mode': feed_mode,
-        'selected_tag': tag,
-        'search_query': query,
-        'feed_heading': _feed_heading(sort, timeframe, selected_tag=tag or None, query=query or None),
-    }
-    return render(request, 'blog/index.html', context)
+    return _render_feed_page(request, None)
 
 
 @login_required(login_url='login')
@@ -212,21 +286,12 @@ def tag_posts(request, tag_slug):
         return redirect('home')
 
     base = Post.objects.filter(status='published', content__icontains=f'#{tag}')
-    qs, sort, timeframe, feed_mode, _tag, _query = _build_feed_queryset(request, base)
-    posts = _annotate_feed_posts(qs, request.user)
-    announcements = Announcement.objects.filter(is_active=True, created_by__profile__role='admin')
-
-    context = {
-        'posts': posts,
-        'announcements': announcements,
-        'feed_sort': sort,
-        'feed_timeframe': timeframe,
-        'feed_mode': feed_mode,
-        'selected_tag': tag,
-        'search_query': '',
-        'feed_heading': _feed_heading(sort, timeframe, selected_tag=tag),
-    }
-    return render(request, 'blog/index.html', context)
+    return _render_feed_page(
+        request,
+        base,
+        selected_tag=tag,
+        search_query='',
+    )
 
 
 def post_detail(request, pk):

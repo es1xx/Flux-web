@@ -1,0 +1,75 @@
+{% load i18n hashtag_filters %}
+<article class="card ig-card shadow-sm" data-post-id="{{ post.pk }}">
+    <header class="ig-card-header">
+        <a href="{% url 'author_posts' post.author.username %}" class="ig-author">
+            {% include 'blog/includes/author_avatar.html' with author=post.author %}
+            <span class="ig-author-meta">
+                <strong>{{ post.author.get_full_name|default:post.author.username }}</strong>
+                <small class="text-muted">{{ post.created_at|date:"M d, Y" }}</small>
+            </span>
+        </a>
+        <div class="ig-header-actions">
+            {% if user == post.author %}
+                <a href="{% url 'edit_post' post.pk %}" class="flux-icon-btn" title="{% trans 'Edit' %}"><i class="bi bi-pencil"></i></a>
+            {% endif %}
+            {% if user == post.author or user.is_staff or user.is_superuser %}
+                <a href="{% url 'delete_post' post.pk %}" class="flux-icon-btn flux-admin-delete" title="{% trans 'Delete' %}"><i class="bi bi-trash"></i></a>
+            {% endif %}
+        </div>
+    </header>
+
+    {% if post.image %}
+        <a href="{% url 'post_detail' post.pk %}" class="ig-media">
+            <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        </a>
+    {% endif %}
+
+    <div class="ig-actions">
+        {% if user.is_authenticated %}
+            <button type="button"
+                    class="ig-action-btn like-btn{% if post.user_liked %} liked{% endif %}"
+                    data-post-id="{{ post.pk }}"
+                    data-like-url="{% url 'toggle_like' post.pk %}"
+                    aria-label="{% trans 'Like' %}">
+                <i class="bi bi-heart{% if post.user_liked %}-fill{% endif %}"></i>
+                <span class="likes-count" id="likes-count-{{ post.pk }}">{{ post.likes }}</span>
+            </button>
+        {% else %}
+            <a href="{% url 'login' %}" class="ig-action-btn" aria-label="{% trans 'Login to like' %}">
+                <i class="bi bi-heart"></i>
+                <span class="likes-count">{{ post.likes }}</span>
+            </a>
+        {% endif %}
+        <button type="button"
+                class="ig-action-btn comment-toggle"
+                data-target="#comments-{{ post.pk }}"
+                aria-label="{% trans 'Comments' %}"
+                aria-expanded="false">
+            <i class="bi bi-chat"></i>
+            <span>{{ post.comments_count }}</span>
+        </button>
+    </div>
+
+    <div class="ig-caption{% if not post.image %} ig-caption-textonly{% endif %}">
+        <a href="{% url 'post_detail' post.pk %}" class="ig-caption-title">{{ post.title }}</a>
+        {% if post.image %}
+            <p class="ig-caption-text">{{ post.content|caption_preview:38 }}</p>
+        {% else %}
+            <p class="ig-caption-body">{{ post.content|caption_preview:220 }}</p>
+        {% endif %}
+    </div>
+
+    <div class="ig-comments" id="comments-{{ post.pk }}" hidden>
+        {% for comment in post.comments.all|slice:":5" %}
+            <div class="ig-comment">
+                <strong>{{ comment.author.username }}</strong>
+                <span>{{ comment.content|truncatewords:25 }}</span>
+            </div>
+        {% empty %}
+            <p class="text-muted small mb-2">{% trans "No comments yet." %}</p>
+        {% endfor %}
+        <a href="{% url 'post_detail' post.pk %}#comments" class="ig-view-all">
+            {% trans "View all comments" %}
+        </a>
+    </div>
+</article>
