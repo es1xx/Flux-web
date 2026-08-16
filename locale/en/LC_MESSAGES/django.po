@@ -1,0 +1,407 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-16 17:08+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: blog/forms.py:16
+msgid "Enter password"
+msgstr ""
+
+#: blog/forms.py:18 blog/forms.py:119 blog/forms.py:121
+msgid "Password"
+msgstr ""
+
+#: blog/forms.py:24
+msgid "Confirm password"
+msgstr ""
+
+#: blog/forms.py:26
+msgid "Confirm Password"
+msgstr ""
+
+#: blog/forms.py:36
+msgid "Enter username"
+msgstr ""
+
+#: blog/forms.py:41
+msgid "Enter email"
+msgstr ""
+
+#: blog/forms.py:46
+msgid "First name (optional)"
+msgstr ""
+
+#: blog/forms.py:51
+msgid "Last name (optional)"
+msgstr ""
+
+#: blog/forms.py:59 blog/forms.py:221
+msgid "This username is already taken. Please choose another one."
+msgstr ""
+
+#: blog/forms.py:61 blog/forms.py:209
+msgid "Username must be at least 3 characters long."
+msgstr ""
+
+#: blog/forms.py:69
+msgid "Password must be at least 8 characters long."
+msgstr ""
+
+#: blog/forms.py:72
+msgid "Password cannot contain only numbers."
+msgstr ""
+
+#: blog/forms.py:74
+msgid "Password must contain both letters and numbers/symbols."
+msgstr ""
+
+#: blog/forms.py:78
+msgid "This password is too common. Please choose a stronger password."
+msgstr ""
+
+#: blog/forms.py:84
+msgid "Password must contain a mix of letters and numbers/special characters."
+msgstr ""
+
+#: blog/forms.py:93
+msgid "Passwords do not match."
+msgstr ""
+
+#: blog/forms.py:111 blog/forms.py:113 blog/forms.py:165 blog/forms.py:168
+msgid "Username"
+msgstr ""
+
+#: blog/forms.py:134
+msgid "Give your post a title"
+msgstr ""
+
+#: blog/forms.py:138
+msgid "Write a caption… use #hashtags inline"
+msgstr ""
+
+#: blog/forms.py:151 blog/templates/blog/post_form.html:27
+msgid "Title"
+msgstr ""
+
+#: blog/forms.py:152 blog/templates/blog/post_form.html:35
+msgid "Caption"
+msgstr ""
+
+#: blog/forms.py:153 blog/templates/blog/post_form.html:44
+msgid "Cover Image"
+msgstr ""
+
+#: blog/forms.py:154 blog/templates/blog/post_form.html:64
+msgid "Status"
+msgstr ""
+
+#: blog/forms.py:177
+msgid "Avatar"
+msgstr ""
+
+#: blog/forms.py:190 blog/forms.py:218
+#, python-format
+msgid "You can change your username again in %(remaining)s."
+msgstr ""
+
+#: blog/forms.py:197 blog/forms.py:233
+#, python-format
+msgid "You can change your avatar again in %(remaining)s."
+msgstr ""
+
+#: blog/forms.py:212
+msgid "Username may only contain letters, digits, and @/./+/-/_ characters."
+msgstr ""
+
+#: blog/forms.py:268
+msgid "Add your comment..."
+msgstr ""
+
+#: blog/templates/blog/base.html:39
+msgid "Search posts or #hashtags"
+msgstr ""
+
+#: blog/templates/blog/base.html:40
+msgid "Search"
+msgstr ""
+
+#: blog/templates/blog/base.html:53 blog/templates/blog/base.html:92
+msgid "Logout"
+msgstr ""
+
+#: blog/templates/blog/base.html:55 blog/templates/blog/base.html:99
+#: blog/templates/blog/index.html:127
+msgid "Login"
+msgstr ""
+
+#: blog/templates/blog/base.html:63
+msgid "Open menu"
+msgstr ""
+
+#: blog/templates/blog/base.html:75
+msgid "Menu"
+msgstr ""
+
+#: blog/templates/blog/base.html:78
+msgid "Close"
+msgstr ""
+
+#: blog/templates/blog/base.html:86
+msgid "Create Post"
+msgstr ""
+
+#: blog/templates/blog/base.html:89
+msgid "Profile"
+msgstr ""
+
+#: blog/templates/blog/base.html:102
+msgid "Register"
+msgstr ""
+
+#: blog/templates/blog/base.html:108 blog/views.py:106
+msgid "Top Rated"
+msgstr ""
+
+#: blog/templates/blog/base.html:113 blog/views.py:102
+msgid "Top Day"
+msgstr ""
+
+#: blog/templates/blog/base.html:118 blog/views.py:103
+msgid "Top Month"
+msgstr ""
+
+#: blog/templates/blog/base.html:123 blog/views.py:104
+msgid "Top Year"
+msgstr ""
+
+#: blog/templates/blog/base.html:128
+msgid "Latest"
+msgstr ""
+
+#: blog/templates/blog/base.html:132
+msgid "Hashtags"
+msgstr ""
+
+#: blog/templates/blog/base.html:144
+msgid "No hashtags yet. Add them in your caption."
+msgstr ""
+
+#: blog/templates/blog/base.html:149
+msgid "Quick Controls"
+msgstr ""
+
+#: blog/templates/blog/base.html:152
+msgid "Theme"
+msgstr ""
+
+#: blog/templates/blog/base.html:153
+msgid "Theme toggle"
+msgstr ""
+
+#: blog/templates/blog/base.html:159
+msgid "Dark"
+msgstr ""
+
+#: blog/templates/blog/base.html:160
+msgid "Light"
+msgstr ""
+
+#: blog/templates/blog/base.html:166 blog/templates/blog/base.html:167
+msgid "Language"
+msgstr ""
+
+#: blog/templates/blog/index.html:4
+msgid "Feed"
+msgstr ""
+
+#: blog/templates/blog/index.html:11 blog/views.py:107
+msgid "Latest Posts"
+msgstr ""
+
+#: blog/templates/blog/index.html:18
+msgid "Announcements"
+msgstr ""
+
+#: blog/templates/blog/index.html:23
+msgid "Posted"
+msgstr ""
+
+#: blog/templates/blog/index.html:45 blog/views.py:294
+msgid "Edit"
+msgstr ""
+
+#: blog/templates/blog/index.html:46
+msgid "Delete"
+msgstr ""
+
+#: blog/templates/blog/index.html:67
+msgid "Like"
+msgstr ""
+
+#: blog/templates/blog/index.html:72
+msgid "Login to like"
+msgstr ""
+
+#: blog/templates/blog/index.html:80
+msgid "Comments"
+msgstr ""
+
+#: blog/templates/blog/index.html:99
+msgid "No comments yet."
+msgstr ""
+
+#: blog/templates/blog/index.html:102
+msgid "View all comments"
+msgstr ""
+
+#: blog/templates/blog/index.html:113
+#, python-format
+msgid "No posts found for #%(tag)s yet."
+msgstr ""
+
+#: blog/templates/blog/index.html:115
+#, python-format
+msgid "No posts found for \"%(query)s\"."
+msgstr ""
+
+#: blog/templates/blog/index.html:117
+msgid "No top-rated posts found for this timeframe."
+msgstr ""
+
+#: blog/templates/blog/index.html:119
+msgid "No posts yet. Be the first to share something!"
+msgstr ""
+
+#: blog/templates/blog/index.html:124
+msgid "Create Your First Post"
+msgstr ""
+
+#: blog/templates/blog/post_form.html:4 blog/templates/blog/post_form.html:14
+#: blog/templates/blog/post_form.html:73
+msgid "Post"
+msgstr ""
+
+#: blog/templates/blog/post_form.html:15
+msgid "Share something clean and sharp. Add #hashtags in your caption."
+msgstr ""
+
+#: blog/templates/blog/post_form.html:40
+msgid "Tip: write tags inline like #wallpaper #archlinux"
+msgstr ""
+
+#: blog/templates/blog/post_form.html:49
+msgid "Drop an image or browse"
+msgstr ""
+
+#: blog/templates/blog/post_form.html:50 blog/templates/blog/post_form.html:97
+msgid "PNG, JPG up to a few MB — optional"
+msgstr ""
+
+#: blog/templates/blog/post_form.html:58
+msgid "Current cover"
+msgstr ""
+
+#: blog/templates/blog/post_form.html:76 blog/templates/blog/post_form.html:78
+msgid "Cancel"
+msgstr ""
+
+#: blog/views.py:97
+#, python-format
+msgid "Posts tagged #%(tag)s"
+msgstr ""
+
+#: blog/views.py:99
+#, python-format
+msgid "Search: \"%(query)s\""
+msgstr ""
+
+#: blog/views.py:116
+msgid "Account created successfully! You can now login."
+msgstr ""
+
+#: blog/views.py:162
+#, python-format
+msgid "Welcome back, %(username)s!"
+msgstr ""
+
+#: blog/views.py:164
+msgid "Invalid username or password."
+msgstr ""
+
+#: blog/views.py:173
+msgid "You have been logged out."
+msgstr ""
+
+#: blog/views.py:227
+msgid "Comment added successfully!"
+msgstr ""
+
+#: blog/views.py:263
+msgid "Post created successfully!"
+msgstr ""
+
+#: blog/views.py:268
+msgid "Create"
+msgstr ""
+
+#: blog/views.py:278
+msgid "You can only edit your own posts."
+msgstr ""
+
+#: blog/views.py:282
+msgid "You do not have permission to edit this post."
+msgstr ""
+
+#: blog/views.py:289
+msgid "Post updated successfully!"
+msgstr ""
+
+#: blog/views.py:304
+msgid "You do not have permission to delete this post."
+msgstr ""
+
+#: blog/views.py:309
+msgid "Post deleted successfully!"
+msgstr ""
+
+#: blog/views.py:323
+msgid "You do not have permission to delete this comment."
+msgstr ""
+
+#: blog/views.py:328
+msgid "Comment deleted successfully!"
+msgstr ""
+
+#: blog/views.py:378
+msgid "Your rating has been saved."
+msgstr ""
+
+#: blog/views.py:380
+msgid "Please select a valid rating."
+msgstr ""
+
+#: blog/views.py:394
+msgid "Subscription preference updated."
+msgstr ""
+
+#: blog/views.py:430
+msgid "Profile updated successfully."
+msgstr ""
+
+#: blog/views.py:432
+msgid "Could not update profile. Please check the form."
+msgstr ""

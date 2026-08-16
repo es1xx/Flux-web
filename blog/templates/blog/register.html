@@ -1,0 +1,115 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Register - Flux{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow-lg">
+            <div class="card-body p-5">
+                <h2 class="card-title text-center mb-4 text-white">
+                    <i class="bi bi-person-plus"></i> Create Account
+                </h2>
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>Registration Error:</strong>
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Username Field -->
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="alert alert-danger mt-2 py-2">
+                                {% for error in form.username.errors %}
+                                    <small><i class="bi bi-exclamation-circle"></i> {{ error }}</small><br>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <small class="text-muted">At least 3 characters, letters and numbers only</small>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Email Address</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="alert alert-danger mt-2 py-2">
+                                {% for error in form.email.errors %}
+                                    <small><i class="bi bi-exclamation-circle"></i> {{ error }}</small><br>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- First Name Field -->
+                    <div class="mb-3">
+                        <label for="id_first_name" class="form-label">First Name (Optional)</label>
+                        {{ form.first_name }}
+                    </div>
+
+                    <!-- Last Name Field -->
+                    <div class="mb-3">
+                        <label for="id_last_name" class="form-label">Last Name (Optional)</label>
+                        {{ form.last_name }}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">Password</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                            <div class="alert alert-danger mt-2 py-2">
+                                {% for error in form.password.errors %}
+                                    <small><i class="bi bi-exclamation-circle"></i> {{ error }}</small><br>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <small class="text-muted d-block mt-2">
+                                <strong>Password Requirements:</strong>
+                                <ul class="mb-0">
+                                    <li>At least 8 characters</li>
+                                    <li>Mix of letters and numbers/symbols</li>
+                                    <li>Not just numbers or just letters</li>
+                                </ul>
+                            </small>
+                        {% endif %}
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class="mb-4">
+                        <label for="id_password2" class="form-label">Confirm Password</label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <div class="alert alert-danger mt-2 py-2">
+                                {% for error in form.password2.errors %}
+                                    <small><i class="bi bi-exclamation-circle"></i> {{ error }}</small><br>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                        <i class="bi bi-person-check"></i> Create Account
+                    </button>
+                </form>
+
+                <hr>
+
+                <p class="text-center mb-0">
+                    Already have an account? 
+                    <a href="{% url 'login' %}" class="fw-bold text-decoration-none">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

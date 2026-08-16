@@ -1,0 +1,249 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" data-theme="dark" data-lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flux{% endblock %}</title>
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('flux-theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% csrf_token %}
+    <div class="flux-ambient" aria-hidden="true"></div>
+
+    <nav class="navbar flux-navbar">
+        <div class="flux-container flux-nav-inner">
+            <a class="navbar-brand flux-brand" href="{% url 'home' %}">
+                <i class="bi bi-triangle-fill"></i>
+                <span>Flux</span>
+            </a>
+
+            <form class="flux-nav-search" action="{% url 'home' %}" method="get" role="search">
+                <i class="bi bi-search" aria-hidden="true"></i>
+                <input type="search"
+                       name="q"
+                       value="{{ search_query|default:'' }}"
+                       placeholder="{% trans 'Search posts or #hashtags' %}"
+                       aria-label="{% trans 'Search' %}"
+                       autocomplete="off">
+            </form>
+
+            <div class="flux-nav-actions">
+                {% if user.is_authenticated %}
+                    <a class="flux-nav-plus"
+                       href="{% url 'create_post' %}"
+                       title="{% trans 'New Post' %}"
+                       aria-label="{% trans 'New Post' %}">
+                        <i class="bi bi-plus-lg"></i>
+                    </a>
+                    <button type="button"
+                            class="flux-btn-pill flux-btn-logout"
+                            data-bs-toggle="modal"
+                            data-bs-target="#logoutConfirmModal">
+                        {% trans "Logout" %}
+                    </button>
+                {% else %}
+                    <a class="flux-btn-pill flux-btn-login" href="{% url 'login' %}">{% trans "Login" %}</a>
+                    <a class="flux-btn-pill flux-btn-register" href="{% url 'register' %}">{% trans "Register" %}</a>
+                {% endif %}
+
+                <button class="flux-hamburger"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#fluxDrawer"
+                        aria-controls="fluxDrawer"
+                        aria-label="{% trans 'Open menu' %}">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-end flux-drawer"
+         tabindex="-1"
+         id="fluxDrawer"
+         aria-label="{% trans 'Menu' %}"
+         data-bs-scroll="true"
+         data-bs-backdrop="true">
+        <button type="button" class="flux-drawer-dismiss" data-bs-dismiss="offcanvas" aria-label="{% trans 'Close' %}">
+            <i class="bi bi-x-lg"></i>
+        </button>
+
+        <div class="offcanvas-body d-flex flex-column">
+            <nav class="flux-drawer-nav">
+                {% if user.is_authenticated %}
+                    <a class="flux-drawer-link" href="{% url 'create_post' %}">
+                        <i class="bi bi-plus-circle"></i> {% trans "Create Post" %}
+                    </a>
+                    <a class="flux-drawer-link" href="{% url 'profile' %}">
+                        <i class="bi bi-person-circle"></i> {% trans "Profile" %}
+                    </a>
+                    <button type="button"
+                            class="flux-drawer-link flux-drawer-logout-btn"
+                            data-open-logout-modal>
+                        <i class="bi bi-box-arrow-right"></i> {% trans "Logout" %}
+                    </button>
+                    <div class="flux-drawer-user">
+                        <i class="bi bi-person"></i> {{ user.username }}
+                    </div>
+                {% else %}
+                    <a class="flux-drawer-link" href="{% url 'login' %}">
+                        <i class="bi bi-box-arrow-in-right"></i> {% trans "Login" %}
+                    </a>
+                    <a class="flux-drawer-link" href="{% url 'register' %}">
+                        <i class="bi bi-person-plus"></i> {% trans "Register" %}
+                    </a>
+                {% endif %}
+            </nav>
+
+            <div class="flux-drawer-filters">
+                <p class="flux-controls-label">{% trans "Top Rated" %}</p>
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <a href="{% url 'home' %}?sort=top&amp;timeframe=day"
+                       class="filter-badge {% if feed_sort == 'top' and feed_timeframe == 'day' %}filter-badge-active{% endif %}"
+                       data-bs-dismiss="offcanvas">
+                        <i class="bi bi-lightning-charge"></i> {% trans "Top Day" %}
+                    </a>
+                    <a href="{% url 'home' %}?sort=top&amp;timeframe=month"
+                       class="filter-badge {% if feed_sort == 'top' and feed_timeframe == 'month' %}filter-badge-active{% endif %}"
+                       data-bs-dismiss="offcanvas">
+                        <i class="bi bi-calendar3"></i> {% trans "Top Month" %}
+                    </a>
+                    <a href="{% url 'home' %}?sort=top&amp;timeframe=year"
+                       class="filter-badge {% if feed_sort == 'top' and feed_timeframe == 'year' %}filter-badge-active{% endif %}"
+                       data-bs-dismiss="offcanvas">
+                        <i class="bi bi-trophy"></i> {% trans "Top Year" %}
+                    </a>
+                    <a href="{% url 'home' %}"
+                       class="filter-badge {% if feed_mode != 'top' and not selected_tag %}filter-badge-active{% endif %}"
+                       data-bs-dismiss="offcanvas">
+                        <i class="bi bi-clock-history"></i> {% trans "Latest" %}
+                    </a>
+                </div>
+
+                <p class="flux-controls-label">
+                    <i class="bi bi-hash"></i> {% trans "Trending Hashtags" %}
+                </p>
+                {% if trending_hashtags %}
+                    <div class="flux-trending-list">
+                        {% for tag, count in trending_hashtags %}
+                            <a href="{% url 'tag_posts' tag %}"
+                               class="flux-trending-pill {% if selected_tag == tag %}is-active{% endif %}"
+                               data-bs-dismiss="offcanvas">
+                                <span class="flux-trending-tag">#{{ tag }}</span>
+                                <span class="flux-trending-count">
+                                    {% blocktrans count counter=count %}{{ counter }} post{% plural %}{{ counter }} posts{% endblocktrans %}
+                                </span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted small mb-0">{% trans "No hashtags yet. Add them in your caption." %}</p>
+                {% endif %}
+            </div>
+
+            <div class="flux-quick-controls mt-auto">
+                <p class="flux-controls-label">{% trans "Quick Controls" %}</p>
+
+                <div class="flux-control-row">
+                    <span class="flux-control-name">{% trans "Theme" %}</span>
+                    <label class="flux-switch" aria-label="{% trans 'Theme toggle' %}">
+                        <input type="checkbox" id="themeSwitchMobile" class="theme-switch-input">
+                        <span class="flux-switch-track">
+                            <span class="flux-switch-thumb"></span>
+                        </span>
+                        <span class="flux-switch-labels">
+                            <span>{% trans "Dark" %}</span>
+                            <span>{% trans "Light" %}</span>
+                        </span>
+                    </label>
+                </div>
+
+                <div class="flux-control-row">
+                    <span class="flux-control-name">{% trans "Language" %}</span>
+                    <div class="lang-switch lang-switch-lg" role="group" aria-label="{% trans 'Language' %}">
+                        <button type="button" class="lang-btn{% if LANGUAGE_CODE == 'uk' %} active{% endif %}" data-lang="uk">UK</button>
+                        <button type="button" class="lang-btn{% if LANGUAGE_CODE == 'en' %} active{% endif %}" data-lang="en">EN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="flux-container flux-messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main class="flux-main">
+        <div class="flux-container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    {% if user.is_authenticated %}
+        <a class="flux-fab-plus"
+           href="{% url 'create_post' %}"
+           title="{% trans 'New Post' %}"
+           aria-label="{% trans 'New Post' %}">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+
+        <div class="modal fade flux-modal" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="logoutConfirmModalLabel">
+                            <i class="bi bi-box-arrow-right"></i>
+                            {% trans "Are you sure you want to log out?" %}
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Close' %}"></button>
+                    </div>
+                    <div class="modal-body pt-3">
+                        <p class="text-muted mb-0">
+                            {% trans "You will need to log back in to post, like, or comment." %}
+                        </p>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            {% trans "Cancel" %}
+                        </button>
+                        <a href="{% url 'logout' %}" class="btn btn-primary">
+                            {% trans "Yes, Log Out" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {# Page modals must sit outside .flux-container (backdrop-filter) to stay crisp #}
+    {% block modals %}{% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,126 @@
+{% extends 'blog/base.html' %}
+{% load i18n %}
+
+{% block title %}{{ action }} {% trans "Post" %} - Flux{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+        <div class="flux-composer card shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <div class="flux-composer-header mb-4">
+                    <span class="flux-composer-icon"><i class="bi bi-triangle-fill"></i></span>
+                    <div>
+                        <h1 class="flux-composer-title mb-1">{{ action }} {% trans "Post" %}</h1>
+                        <p class="text-muted mb-0 small">{% trans "Share something clean and sharp. Add #hashtags in your caption." %}</p>
+                    </div>
+                </div>
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <form method="post" enctype="multipart/form-data" class="flux-form" id="post-composer-form">
+                    {% csrf_token %}
+
+                    <div class="flux-field mb-4">
+                        <label for="id_title" class="flux-label">{% trans "Title" %}</label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                            <div class="flux-field-error">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="flux-field mb-4">
+                        <label for="id_content" class="flux-label">{% trans "Caption" %}</label>
+                        {{ form.content }}
+                        {% if form.content.errors %}
+                            <div class="flux-field-error">{{ form.content.errors }}</div>
+                        {% endif %}
+                        <p class="flux-help text-muted mb-0">{% trans "Tip: write tags inline like #wallpaper #archlinux" %}</p>
+                    </div>
+
+                    <div class="flux-field mb-4">
+                        <label class="flux-label">{% trans "Cover Image" %}</label>
+                        <label class="flux-dropzone" for="id_image" id="cover-dropzone">
+                            <input type="file" name="image" accept="image/*" id="id_image" class="flux-file-input">
+                            <div class="flux-dropzone-inner">
+                                <i class="bi bi-cloud-arrow-up"></i>
+                                <span class="flux-dropzone-title">{% trans "Drop an image or browse" %}</span>
+                                <span class="flux-dropzone-sub text-muted" id="cover-filename">{% trans "PNG, JPG up to a few MB — optional" %}</span>
+                            </div>
+                        </label>
+                        {% if form.image.errors %}
+                            <div class="flux-field-error">{{ form.image.errors }}</div>
+                        {% endif %}
+                        {% if post.image %}
+                            <div class="flux-current-cover mt-3">
+                                <img src="{{ post.image.url }}" alt="{% trans 'Current cover' %}">
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="flux-composer-actions">
+                        <button type="submit"
+                                name="status"
+                                value="draft"
+                                class="btn btn-outline-secondary btn-lg flux-btn-draft">
+                            <i class="bi bi-journal-check"></i> {% trans "Save as Draft" %}
+                        </button>
+                        <button type="submit"
+                                name="status"
+                                value="published"
+                                class="btn btn-primary btn-lg flux-btn-publish">
+                            <i class="bi bi-send-fill"></i> {% trans "Publish" %}
+                        </button>
+                        {% if post %}
+                            <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-secondary btn-lg">{% trans "Cancel" %}</a>
+                        {% else %}
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-lg">{% trans "Cancel" %}</a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    var input = document.getElementById('id_image');
+    var zone = document.getElementById('cover-dropzone');
+    var label = document.getElementById('cover-filename');
+    if (!input || !zone) return;
+
+    function setName(file) {
+        if (label) label.textContent = file ? file.name : '{% trans "PNG, JPG up to a few MB — optional" %}';
+        zone.classList.toggle('has-file', !!file);
+    }
+
+    input.addEventListener('change', function () {
+        setName(input.files && input.files[0]);
+    });
+
+    ['dragenter', 'dragover'].forEach(function (evt) {
+        zone.addEventListener(evt, function (e) {
+            e.preventDefault();
+            zone.classList.add('is-dragover');
+        });
+    });
+    ['dragleave', 'drop'].forEach(function (evt) {
+        zone.addEventListener(evt, function (e) {
+            e.preventDefault();
+            zone.classList.remove('is-dragover');
+        });
+    });
+    zone.addEventListener('drop', function (e) {
+        var files = e.dataTransfer && e.dataTransfer.files;
+        if (!files || !files.length) return;
+        input.files = files;
+        setName(files[0]);
+    });
+})();
+</script>
+{% endblock %}

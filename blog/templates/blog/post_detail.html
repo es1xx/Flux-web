@@ -1,0 +1,181 @@
+{% extends 'blog/base.html' %}
+{% load hashtag_filters %}
+
+{% block title %}{{ post.title }} - Flux{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Post Content -->
+    <div class="col-lg-8">
+        <article class="card shadow-sm mb-4">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="max-height: 400px; object-fit: cover;">
+            {% endif %}
+            
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h1 class="card-title">{{ post.title }}</h1>
+                        <small class="text-muted">
+                            By <a href="{% url 'author_posts' post.author.username %}" class="text-decoration-none">
+                                <strong>{{ post.author.get_full_name|default:post.author.username }}</strong>
+                            </a>
+                        </small>
+                        <br>
+                        <small class="text-muted">
+                            <i class="bi bi-calendar"></i> {{ post.created_at|date:"F d, Y \a\t H:i" }}
+                            {% if post.updated_at != post.created_at %}
+                                <br><i class="bi bi-pencil"></i> Updated: {{ post.updated_at|date:"F d, Y \a\t H:i" }}
+                            {% endif %}
+                        </small>
+                    </div>
+                    {% if is_author %}
+                        <div class="btn-group" role="group">
+                            <a href="{% url 'edit_post' post.pk %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                            <a href="{% url 'delete_post' post.pk %}" class="btn btn-outline-danger">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    {% elif user.is_staff or user.is_superuser %}
+                        <a href="{% url 'delete_post' post.pk %}" class="btn btn-outline-danger" title="Moderate">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    {% endif %}
+                </div>
+
+                <hr>
+
+                <!-- Post Content -->
+                <div class="post-content mb-4">
+                    {{ post.content|linkify_hashtags }}
+                </div>
+
+                <!-- Post Stats & Like Button -->
+                <div class="ig-actions border-0 px-0 py-3" style="border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+                    {% if user.is_authenticated %}
+                        <button type="button" class="ig-action-btn like-btn{% if user_liked %} liked{% endif %}" data-post-id="{{ post.pk }}" data-like-url="{% url 'toggle_like' post.pk %}" id="like-btn-{{ post.pk }}">
+                            <i class="bi bi-heart{% if user_liked %}-fill{% endif %}"></i>
+                            <span class="likes-count" id="likes-count-{{ post.pk }}">{{ post.likes_count }}</span>
+                        </button>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="ig-action-btn">
+                            <i class="bi bi-heart"></i>
+                            <span class="likes-count">{{ post.likes_count }}</span>
+                        </a>
+                    {% endif %}
+                    <a href="#comments" class="ig-action-btn">
+                        <i class="bi bi-chat"></i>
+                        <span>{{ comments.count }}</span>
+                    </a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Comments Section -->
+        <section class="comments-section" id="comments">
+            <h3 class="mb-4">
+                <i class="bi bi-chat-dots"></i> Comments ({{ comments.count }})
+            </h3>
+
+            {% if user.is_authenticated %}
+                <!-- Add Comment Form -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Leave a Comment</h5>
+                        <form method="post" action="{% url 'post_detail' post.pk %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                {{ form.content }}
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-send"></i> Post Comment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <p><a href="{% url 'login' %}">Login</a> to leave a comment.</p>
+                </div>
+            {% endif %}
+
+            <!-- Comments List -->
+            {% if comments %}
+                <div class="comments-list">
+                    {% for comment in comments %}
+                        <div class="card mb-3 shadow-sm comment-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h6 class="card-subtitle mb-1">
+                                            <a href="{% url 'author_posts' comment.author.username %}" class="text-decoration-none">
+                                                <strong>{{ comment.author.get_full_name|default:comment.author.username }}</strong>
+                                            </a>
+                                        </h6>
+                                        <small class="text-muted">
+                                            <i class="bi bi-clock"></i> {{ comment.created_at|date:"F d, Y \a\t H:i" }}
+                                        </small>
+                                    </div>
+                                    {% if comment.pk in comment_delete_ids %}
+                                        <form method="post" action="{% url 'delete_comment' comment.pk %}" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                                <p class="card-text">{{ comment.content|linebreaks }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-secondary text-center">
+                    <i class="bi bi-chat-left"></i> No comments yet. Be the first to comment!
+                </div>
+            {% endif %}
+        </section>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm sticky-top" style="top: 20px;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-person-circle"></i> About Author
+                </h5>
+                <p class="card-text">
+                    <strong>{{ post.author.get_full_name|default:post.author.username }}</strong>
+                </p>
+                {% if post.author.profile.bio %}
+                    <p class="card-text small">{{ post.author.profile.bio }}</p>
+                {% endif %}
+                <a href="{% url 'author_posts' post.author.username %}" class="btn btn-outline-primary btn-sm w-100">
+                    <i class="bi bi-file-text"></i> View All Posts
+                </a>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-info-circle"></i> Post Stats
+                </h5>
+                <div class="row text-center">
+                    <div class="col-6">
+                        <h6 class="mb-0">{{ post.likes_count }}</h6>
+                        <small class="text-muted">Likes</small>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="mb-0">{{ comments.count }}</h6>
+                        <small class="text-muted">Comments</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,404 @@
+# Flux Ukrainian translations
+# Copyright (C) 2026
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Flux 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-16 17:08+0000\n"
+"PO-Revision-Date: 2026-08-16 17:08+0000\n"
+"Last-Translator: Flux\n"
+"Language-Team: Ukrainian\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "Enter password"
+msgstr "Введіть пароль"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Confirm password"
+msgstr "Підтвердіть пароль"
+
+msgid "Confirm Password"
+msgstr "Підтвердження пароля"
+
+msgid "Enter username"
+msgstr "Введіть імʼя користувача"
+
+msgid "Enter email"
+msgstr "Введіть email"
+
+msgid "First name (optional)"
+msgstr "Імʼя (необовʼязково)"
+
+msgid "Last name (optional)"
+msgstr "Прізвище (необовʼязково)"
+
+msgid "This username is already taken. Please choose another one."
+msgstr "Це імʼя користувача вже зайняте. Оберіть інше."
+
+msgid "Username must be at least 3 characters long."
+msgstr "Імʼя користувача має містити щонайменше 3 символи."
+
+msgid "Password must be at least 8 characters long."
+msgstr "Пароль має містити щонайменше 8 символів."
+
+msgid "Password cannot contain only numbers."
+msgstr "Пароль не може складатися лише з цифр."
+
+msgid "Password must contain both letters and numbers/symbols."
+msgstr "Пароль має містити літери та цифри/символи."
+
+msgid "This password is too common. Please choose a stronger password."
+msgstr "Цей пароль занадто простий. Оберіть надійніший."
+
+msgid "Password must contain a mix of letters and numbers/special characters."
+msgstr "Пароль має містити літери та цифри/спецсимволи."
+
+msgid "Passwords do not match."
+msgstr "Паролі не збігаються."
+
+msgid "Username"
+msgstr "Імʼя користувача"
+
+msgid "Give your post a title"
+msgstr "Дайте публікації заголовок"
+
+msgid "Write a caption… use #hashtags inline"
+msgstr "Напишіть підпис… додавайте #хештеги в тексті"
+
+msgid "Title"
+msgstr "Заголовок"
+
+msgid "Caption"
+msgstr "Підпис"
+
+msgid "Cover Image"
+msgstr "Обкладинка"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Avatar"
+msgstr "Аватар"
+
+msgid "You can change your username again in %(remaining)s."
+msgstr "Ви зможете змінити імʼя користувача знову через %(remaining)s."
+
+msgid "You can change your avatar again in %(remaining)s."
+msgstr "Ви зможете змінити аватар знову через %(remaining)s."
+
+msgid "Username may only contain letters, digits, and @/./+/-/_ characters."
+msgstr "Імʼя користувача може містити лише літери, цифри та символи @/./+/-/_."
+
+msgid "Add your comment..."
+msgstr "Додайте коментар..."
+
+msgid "Search posts or #hashtags"
+msgstr "Пошук постів або #хештегів"
+
+msgid "Search"
+msgstr "Пошук"
+
+msgid "Logout"
+msgstr "Вийти"
+
+msgid "Login"
+msgstr "Увійти"
+
+msgid "Open menu"
+msgstr "Відкрити меню"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "Close"
+msgstr "Закрити"
+
+msgid "Create Post"
+msgstr "Створити пост"
+
+msgid "Profile"
+msgstr "Профіль"
+
+msgid "Register"
+msgstr "Реєстрація"
+
+msgid "Top Rated"
+msgstr "Топ рейтинг"
+
+msgid "Top Day"
+msgstr "Топ дня"
+
+msgid "Top Month"
+msgstr "Топ місяця"
+
+msgid "Top Year"
+msgstr "Топ року"
+
+msgid "Latest"
+msgstr "Останні"
+
+msgid "Hashtags"
+msgstr "Хештеги"
+
+msgid "No hashtags yet. Add them in your caption."
+msgstr "Хештегів ще немає. Додайте їх у підпис."
+
+msgid "Quick Controls"
+msgstr "Швидкі налаштування"
+
+msgid "Theme"
+msgstr "Тема"
+
+msgid "Theme toggle"
+msgstr "Перемикач теми"
+
+msgid "Dark"
+msgstr "Темна"
+
+msgid "Light"
+msgstr "Світла"
+
+msgid "Language"
+msgstr "Мова"
+
+msgid "Feed"
+msgstr "Стрічка"
+
+msgid "Latest Posts"
+msgstr "Останні пости"
+
+msgid "Announcements"
+msgstr "Оголошення"
+
+msgid "Posted"
+msgstr "Опубліковано"
+
+msgid "Edit"
+msgstr "Редагувати"
+
+msgid "Delete"
+msgstr "Видалити"
+
+msgid "Like"
+msgstr "Подобається"
+
+msgid "Login to like"
+msgstr "Увійдіть, щоб уподобати"
+
+msgid "Comments"
+msgstr "Коментарі"
+
+msgid "No comments yet."
+msgstr "Коментарів ще немає."
+
+msgid "View all comments"
+msgstr "Переглянути всі коментарі"
+
+msgid "No posts found for #%(tag)s yet."
+msgstr "Постів із #%(tag)s ще немає."
+
+msgid "No posts found for \"%(query)s\"."
+msgstr "Нічого не знайдено за запитом \"%(query)s\"."
+
+msgid "No top-rated posts found for this timeframe."
+msgstr "Немає топ-постів за цей період."
+
+msgid "No posts yet. Be the first to share something!"
+msgstr "Постів ще немає. Станьте першим!"
+
+msgid "Create Your First Post"
+msgstr "Створіть свій перший пост"
+
+msgid "Post"
+msgstr "Пост"
+
+msgid "Share something clean and sharp. Add #hashtags in your caption."
+msgstr "Поділіться чимось стильним. Додайте #хештеги в підпис."
+
+msgid "Tip: write tags inline like #wallpaper #archlinux"
+msgstr "Порада: пишіть теги прямо в тексті, наприклад #wallpaper #archlinux"
+
+msgid "Drop an image or browse"
+msgstr "Перетягніть зображення або оберіть файл"
+
+msgid "PNG, JPG up to a few MB — optional"
+msgstr "PNG, JPG до кількох МБ — необовʼязково"
+
+msgid "Current cover"
+msgstr "Поточна обкладинка"
+
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgid "Posts tagged #%(tag)s"
+msgstr "Пости з тегом #%(tag)s"
+
+msgid "Search: \"%(query)s\""
+msgstr "Пошук: \"%(query)s\""
+
+msgid "Account created successfully! You can now login."
+msgstr "Обліковий запис створено! Тепер можна увійти."
+
+msgid "Welcome back, %(username)s!"
+msgstr "З поверненням, %(username)s!"
+
+msgid "Invalid username or password."
+msgstr "Невірне імʼя користувача або пароль."
+
+msgid "You have been logged out."
+msgstr "Ви вийшли з системи."
+
+msgid "Comment added successfully!"
+msgstr "Коментар додано!"
+
+msgid "Post created successfully!"
+msgstr "Пост створено!"
+
+msgid "Create"
+msgstr "Створити"
+
+msgid "You can only edit your own posts."
+msgstr "Ви можете редагувати лише свої пости."
+
+msgid "You do not have permission to edit this post."
+msgstr "У вас немає дозволу редагувати цей пост."
+
+msgid "Post updated successfully!"
+msgstr "Пост оновлено!"
+
+msgid "You do not have permission to delete this post."
+msgstr "У вас немає дозволу видалити цей пост."
+
+msgid "Post deleted successfully!"
+msgstr "Пост видалено!"
+
+msgid "You do not have permission to delete this comment."
+msgstr "У вас немає дозволу видалити цей коментар."
+
+msgid "Comment deleted successfully!"
+msgstr "Коментар видалено!"
+
+msgid "Your rating has been saved."
+msgstr "Вашу оцінку збережено."
+
+msgid "Please select a valid rating."
+msgstr "Оберіть коректну оцінку."
+
+msgid "Subscription preference updated."
+msgstr "Налаштування підписки оновлено."
+
+msgid "Profile updated successfully."
+msgstr "Профіль успішно оновлено."
+
+msgid "Could not update profile. Please check the form."
+msgstr "Не вдалося оновити профіль. Перевірте форму."
+
+msgid "Add #hashtags directly in your post caption."
+msgstr "Додавайте #хештеги прямо в підпис поста."
+
+msgid "No bio provided"
+msgstr "Біографію не вказано"
+
+msgid "Posts"
+msgstr "Пости"
+
+msgid "This author hasn't published any posts yet."
+msgstr "Цей автор ще не опублікував жодного поста."
+
+msgid "Joined"
+msgstr "Приєднався"
+
+msgid "Likes"
+msgstr "Вподобання"
+
+msgid "Since"
+msgstr "З"
+
+msgid "Bio"
+msgstr "Біо"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Edit Profile"
+msgstr "Редагувати профіль"
+
+msgid "Unsubscribe"
+msgstr "Відписатися"
+
+msgid "Subscribe"
+msgstr "Підписатися"
+
+msgid "My Posts"
+msgstr "Мої пости"
+
+msgid "You haven't published any posts yet."
+msgstr "Ви ще не опублікували жодного поста."
+
+msgid "Username can be updated once every 3 days. Avatar: once per hour."
+msgstr "Імʼя користувача можна змінювати раз на 3 дні. Аватар — раз на годину."
+
+msgid "Locked"
+msgstr "Заблоковано"
+
+msgid "Once every 3 days (72 hours)."
+msgstr "Раз на 3 дні (72 години)."
+
+msgid "Upload new avatar"
+msgstr "Завантажити новий аватар"
+
+msgid "Avatar locked"
+msgstr "Аватар заблоковано"
+
+msgid "Click or drop an image"
+msgstr "Натисніть або перетягніть зображення"
+
+msgid "Available in %(remaining)s"
+msgstr "Доступно через %(remaining)s"
+
+msgid "Once every 1 hour."
+msgstr "Раз на 1 годину."
+
+msgid "Save Changes"
+msgstr "Зберегти зміни"
+
+msgid "Save as Draft"
+msgstr "Зберегти як чернетку"
+
+msgid "Publish"
+msgstr "Опублікувати"
+
+msgid "Post published successfully!"
+msgstr "Пост успішно опубліковано!"
+
+msgid "Draft saved successfully!"
+msgstr "Чернетку збережено!"
+
+msgid "New Post"
+msgstr "Новий пост"
+
+msgid "Trending Hashtags"
+msgstr "Хештеги в тренді"
+
+msgid "Are you sure you want to log out?"
+msgstr "Ви впевнені, що хочете вийти?"
+
+msgid "You will need to log back in to post, like, or comment."
+msgstr "Щоб публікувати, вподобувати чи коментувати, потрібно увійти знову."
+
+msgid "Yes, Log Out"
+msgstr "Так, вийти"
+
+msgid "%(counter)s post"
+msgid_plural "%(counter)s posts"
+msgstr[0] "%(counter)s пост"
+msgstr[1] "%(counter)s пости"
+msgstr[2] "%(counter)s постів"
+

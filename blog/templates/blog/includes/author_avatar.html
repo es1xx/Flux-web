@@ -1,0 +1,12 @@
+{% comment %}
+  Expects: author (User). Uses related_name "profile" on UserProfile.
+{% endcomment %}
+{% if author.profile.has_custom_avatar %}
+    <img src="{{ author.profile.avatar.url }}"
+         alt="{{ author.username }}"
+         class="ig-avatar-img rounded-circle"
+         width="36"
+         height="36">
+{% else %}
+    <span class="ig-avatar" aria-hidden="true">{{ author.username|make_list|first|upper }}</span>
+{% endif %}
