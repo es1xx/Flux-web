@@ -5,3 +5,5 @@ pillow==12.3.0
 setuptools==68.0.0
 sqlparse==0.5.5
 wheel==0.40.0
+gunicorn
+whitenoise
