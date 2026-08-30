@@ -68,7 +68,8 @@
                                 class="ig-action-btn like-btn{% if post.user_liked %} liked{% endif %}"
                                 data-post-id="{{ post.pk }}"
                                 data-like-url="{% url 'toggle_like' post.pk %}"
-                                aria-label="{% trans 'Like' %}">
+                                aria-label="{% trans 'Like' %}"
+                                aria-pressed="{% if post.user_liked %}true{% else %}false{% endif %}">
                             <i class="bi bi-heart{% if post.user_liked %}-fill{% endif %}"></i>
                             <span class="likes-count" id="likes-count-{{ post.pk }}">{{ post.likes }}</span>
                         </button>

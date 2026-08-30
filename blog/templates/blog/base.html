@@ -31,7 +31,7 @@
                 <span>Flux</span>
             </a>
 
-            <form class="flux-nav-search" action="{% url 'home' %}" method="get" role="search">
+            <form class="flux-nav-search flux-nav-search--header" action="{% url 'home' %}" method="get" role="search">
                 <i class="bi bi-search" aria-hidden="true"></i>
                 <input type="search"
                        name="q"
@@ -41,23 +41,36 @@
                        autocomplete="off">
             </form>
 
-            <div class="flux-nav-actions">
+            <div class="flux-nav-actions flux-nav-actions--header">
                 {% if user.is_authenticated %}
-                    <a class="flux-nav-plus"
+                    <a class="flux-nav-plus flux-nav-plus--header"
                        href="{% url 'create_post' %}"
                        title="{% trans 'New Post' %}"
                        aria-label="{% trans 'New Post' %}">
                         <i class="bi bi-plus-lg"></i>
                     </a>
                     <button type="button"
-                            class="flux-btn-pill flux-btn-logout"
+                            class="flux-btn-pill flux-btn-logout flux-nav-logout--header"
                             data-bs-toggle="modal"
                             data-bs-target="#logoutConfirmModal">
                         {% trans "Logout" %}
                     </button>
+                    <button type="button"
+                            class="flux-nav-icon-btn flux-nav-logout--mobile"
+                            data-bs-toggle="modal"
+                            data-bs-target="#logoutConfirmModal"
+                            aria-label="{% trans 'Logout' %}">
+                        <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                    </button>
                 {% else %}
-                    <a class="flux-btn-pill flux-btn-login" href="{% url 'login' %}">{% trans "Login" %}</a>
-                    <a class="flux-btn-pill flux-btn-register" href="{% url 'register' %}">{% trans "Register" %}</a>
+                    <a class="flux-btn-pill flux-btn-login flux-nav-auth--header" href="{% url 'login' %}">{% trans "Login" %}</a>
+                    <a class="flux-btn-pill flux-btn-register flux-nav-auth--header" href="{% url 'register' %}">{% trans "Register" %}</a>
+                    <a class="flux-nav-icon-btn flux-nav-login--mobile"
+                       href="{% url 'login' %}"
+                       aria-label="{% trans 'Login' %}"
+                       title="{% trans 'Login' %}">
+                        <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
+                    </a>
                 {% endif %}
 
                 <button class="flux-hamburger"
@@ -201,6 +214,24 @@
             {% block content %}{% endblock %}
         </div>
     </main>
+
+    <div class="flux-mobile-bottom" role="group" aria-label="{% trans 'Quick actions' %}">
+        <form class="flux-mobile-search-float" action="{% url 'home' %}" method="get" role="search">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            <input type="search"
+                   name="q"
+                   value="{{ search_query|default:'' }}"
+                   placeholder="{% trans 'Search' %}"
+                   aria-label="{% trans 'Search posts or #hashtags' %}"
+                   autocomplete="off">
+        </form>
+        <a class="flux-mobile-fab-plus"
+           href="{% url 'create_post' %}"
+           title="{% trans 'New Post' %}"
+           aria-label="{% trans 'New Post' %}">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+    </div>
 
     {% if user.is_authenticated %}
         <a class="flux-fab-plus"

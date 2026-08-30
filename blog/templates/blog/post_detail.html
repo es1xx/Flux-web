@@ -55,7 +55,7 @@
                 <!-- Post Stats & Like Button -->
                 <div class="ig-actions border-0 px-0 py-3" style="border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
                     {% if user.is_authenticated %}
-                        <button type="button" class="ig-action-btn like-btn{% if user_liked %} liked{% endif %}" data-post-id="{{ post.pk }}" data-like-url="{% url 'toggle_like' post.pk %}" id="like-btn-{{ post.pk }}">
+                        <button type="button" class="ig-action-btn like-btn{% if user_liked %} liked{% endif %}" data-post-id="{{ post.pk }}" data-like-url="{% url 'toggle_like' post.pk %}" id="like-btn-{{ post.pk }}" aria-pressed="{% if user_liked %}true{% else %}false{% endif %}">
                             <i class="bi bi-heart{% if user_liked %}-fill{% endif %}"></i>
                             <span class="likes-count" id="likes-count-{{ post.pk }}">{{ post.likes_count }}</span>
                         </button>

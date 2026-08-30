@@ -260,7 +260,7 @@ function setupLikeButtons(root) {
         if (button.dataset.bound === '1') return;
         button.dataset.bound = '1';
 
-        button.addEventListener('click', function (e) {
+        button.addEventListener('click', async function (e) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -279,45 +279,45 @@ function setupLikeButtons(root) {
             button.dataset.loading = '1';
             button.disabled = true;
 
-            fetch(likeUrl, {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'X-CSRFToken': csrfToken,
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-                },
-                body: '',
-            })
-                .then(function (response) {
-                    if (response.status === 401 || response.status === 403) {
-                        window.location.href = languagePrefixedUrl(getLang()).replace(/\/[^/]*$/, '/login/');
-                        throw new Error('auth');
-                    }
-                    if (response.redirected && response.url.indexOf('/login') !== -1) {
-                        window.location.href = response.url;
-                        throw new Error('auth');
-                    }
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    const type = response.headers.get('content-type') || '';
-                    if (type.indexOf('application/json') === -1) {
-                        throw new Error('Unexpected response');
-                    }
-                    return response.json();
-                })
-                .then(function (data) {
-                    updateLikeButton(button, postId, data);
-                })
-                .catch(function (error) {
-                    if (error && error.message === 'auth') return;
-                    console.error('Like error:', error);
-                    showToast('Error updating like. Please try again.', 'error');
-                })
-                .finally(function () {
-                    button.dataset.loading = '0';
-                    button.disabled = false;
+            try {
+                const response = await fetch(likeUrl, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                    },
+                    body: '',
                 });
+
+                if (response.status === 401 || response.status === 403) {
+                    window.location.href = languagePrefixedUrl(getLang()).replace(/\/[^/]*$/, '/login/');
+                    return;
+                }
+                if (response.redirected && response.url.indexOf('/login') !== -1) {
+                    window.location.href = response.url;
+                    return;
+                }
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const contentType = response.headers.get('content-type') || '';
+                if (contentType.indexOf('application/json') === -1) {
+                    throw new Error('Unexpected response');
+                }
+
+                const data = await response.json();
+                updateLikeButton(button, postId, data);
+            } catch (error) {
+                console.error('Like error:', error);
+                showToast('Error updating like. Please try again.', 'error');
+            } finally {
+                button.dataset.loading = '0';
+                button.disabled = false;
+            }
         });
     });
 }
@@ -338,10 +338,12 @@ function updateLikeButton(button, postId, data) {
         icon.classList.remove('bi-heart');
         icon.classList.add('bi-heart-fill');
         button.classList.add('liked');
+        button.setAttribute('aria-pressed', 'true');
     } else {
         icon.classList.add('bi-heart');
         icon.classList.remove('bi-heart-fill');
         button.classList.remove('liked');
+        button.setAttribute('aria-pressed', 'false');
     }
 }
 

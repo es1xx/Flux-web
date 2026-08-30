@@ -443,32 +443,31 @@ def delete_comment(request, pk):
 @login_required(login_url='login')
 @require_POST
 def toggle_like(request, pk):
-    """Toggle like on a post (AJAX support)."""
+    """Toggle like on a post; always returns JSON for the front-end."""
     post = get_object_or_404(Post, pk=pk)
 
-    like, created = Like.objects.get_or_create(post=post, user=request.user)
+    try:
+        like, created = Like.objects.get_or_create(post=post, user=request.user)
 
-    if not created:
-        like.delete()
-        liked = False
-    else:
-        liked = True
+        if not created:
+            like.delete()
+            liked = False
+        else:
+            liked = True
 
-    likes_count = post.post_likes.count()
-    post.likes_count = likes_count
-    post.save(update_fields=['likes_count'])
+        likes_count = post.post_likes.count()
+        post.likes_count = likes_count
+        post.save(update_fields=['likes_count'])
 
-    accepts_json = (
-        request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-        or 'application/json' in request.headers.get('Accept', '')
-    )
-    if accepts_json:
         return JsonResponse({
             'liked': liked,
             'likes_count': likes_count,
         })
-
-    return redirect('post_detail', pk=post.pk)
+    except Exception:
+        return JsonResponse(
+            {'error': _('Could not update like.')},
+            status=500,
+        )
 
 
 @login_required(login_url='login')
