@@ -853,60 +853,85 @@ main,
 
 .flux-mobile-bottom {
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .flux-mobile-search-float {
     position: relative;
+    display: flex;
+    align-items: center;
     flex: 1;
     min-width: 0;
+    height: 44px;
+    border-radius: 9999px;
+    background: rgba(26, 32, 44, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    overflow: hidden;
+    isolation: isolate;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.flux-mobile-search-float:focus-within {
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(26, 32, 44, 0.82);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.34);
 }
 
 .flux-mobile-search-float i {
     position: absolute;
-    left: 20px;
+    left: 1rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1;
     pointer-events: none;
     z-index: 1;
 }
 
 .flux-mobile-search-float input {
     display: block;
-    width: 100%;
-    min-width: 0;
-    min-height: unset;
-    padding: 10px 20px 10px 2.75rem !important;
-    border-radius: 50px !important;
-    background: rgba(20, 24, 33, 0.55) !important;
-    background-color: rgba(20, 24, 33, 0.55) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    color: var(--text-primary);
-    font-size: 0.875rem;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    min-height: unset !important;
+    padding: 0 1rem 0 2.75rem !important;
+    border-radius: 9999px !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    color: var(--text-primary) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25;
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     -webkit-appearance: none;
     appearance: none;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: none;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    transition: color 0.2s ease;
 }
 
 .flux-mobile-search-float input::placeholder {
     color: var(--text-muted);
+    opacity: 1;
 }
 
 .flux-mobile-search-float input:focus {
-    outline: none;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-    background: rgba(20, 24, 33, 0.65) !important;
-    background-color: rgba(20, 24, 33, 0.65) !important;
-    box-shadow: none;
+    outline: none !important;
+    border: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
 
 .flux-mobile-fab-plus {
@@ -937,17 +962,28 @@ main,
     text-decoration: none !important;
 }
 
+[data-theme="light"] .flux-mobile-search-float {
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .flux-mobile-search-float:focus-within {
+    background: rgba(255, 255, 255, 0.86);
+    border-color: rgba(0, 0, 0, 0.14);
+}
+
 [data-theme="light"] .flux-mobile-search-float input {
-    background: rgba(255, 255, 255, 0.55) !important;
-    background-color: rgba(255, 255, 255, 0.55) !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
     box-shadow: none;
 }
 
 [data-theme="light"] .flux-mobile-search-float input:focus {
-    background: rgba(255, 255, 255, 0.68) !important;
-    background-color: rgba(255, 255, 255, 0.68) !important;
-    border-color: rgba(0, 0, 0, 0.14) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
 }
 
 [data-theme="light"] .flux-mobile-fab-plus {
@@ -985,10 +1021,12 @@ main,
     .flux-mobile-bottom {
         display: flex;
         position: fixed;
-        left: 12px;
-        right: 12px;
+        left: 16px;
+        right: 16px;
         bottom: calc(16px + env(safe-area-inset-bottom, 0px));
         z-index: 1035;
+        align-items: center;
+        gap: 10px;
         background: none;
         border: none;
         box-shadow: none;
@@ -1770,18 +1808,50 @@ main,
    Forms
    ============================================ */
 
+.card,
+.card-body,
+.card form {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.card form {
+    width: 100%;
+}
+
+.card form .mb-3,
+.card form .mb-4 {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.card.shadow-lg {
+    width: 100%;
+    max-width: 100%;
+}
+
+.card.shadow-lg > .card-body {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    padding: 1.5rem;
+}
+
 .form-label {
     font-weight: 600;
     color: var(--text-primary) !important;
     margin-bottom: 0.6rem;
 }
 
-input,
-textarea,
-select,
+.card input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]),
+.card textarea,
+.card select,
 .form-control,
 .form-select,
 input[type="file"] {
+    box-sizing: border-box;
     background: var(--input-bg) !important;
     border: 1px solid var(--input-border) !important;
     border-radius: var(--radius-sm) !important;
@@ -1795,9 +1865,24 @@ input[type="file"] {
     color-scheme: dark;
 }
 
-[data-theme="light"] input,
-[data-theme="light"] textarea,
-[data-theme="light"] select,
+.card form input[type="text"],
+.card form input[type="password"],
+.card form input[type="email"],
+.card form input[type="search"],
+.card form input[type="tel"],
+.card form input[type="url"],
+.card form textarea,
+.card form select,
+.card .form-control {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+[data-theme="light"] .card input,
+[data-theme="light"] .card textarea,
+[data-theme="light"] .card select,
 [data-theme="light"] .form-control,
 [data-theme="light"] .form-select {
     color-scheme: light;
@@ -1809,9 +1894,9 @@ textarea::placeholder {
     opacity: 1 !important;
 }
 
-input:focus,
-textarea:focus,
-select:focus,
+.card input:focus,
+.card textarea:focus,
+.card select:focus,
 .form-control:focus,
 .form-select:focus {
     background: var(--input-bg) !important;
@@ -1819,6 +1904,13 @@ select:focus,
     box-shadow: 0 0 0 3px rgba(128, 128, 128, 0.12) !important;
     color: var(--text-primary) !important;
     -webkit-text-fill-color: var(--text-primary) !important;
+}
+
+.flux-nav-search input:focus,
+.flux-mobile-search-float input:focus {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
 }
 
 input[type="file"]::file-selector-button {
@@ -2240,11 +2332,41 @@ hr,
         margin-right: 0;
     }
 
+    .col-lg-5,
+    .col-lg-6,
     .col-lg-8,
     .col-lg-4 {
         width: 100%;
         max-width: 100%;
         flex: 0 0 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .card-body {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        padding: 1rem !important;
+    }
+
+    .card-body.p-5,
+    .card.shadow-lg > .card-body {
+        padding: 1rem !important;
+    }
+
+    .card form input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]),
+    .card form textarea,
+    .card form select {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .profile-hero {
@@ -2264,10 +2386,6 @@ hr,
 
     .profile-actions .btn {
         flex: 1 1 auto;
-    }
-
-    .card-body {
-        padding: 1rem;
     }
 
     .btn:not(.btn-group .btn):not(.lang-btn):not(.flux-icon-btn) {

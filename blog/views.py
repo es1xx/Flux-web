@@ -200,9 +200,10 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, _('Account created successfully! You can now login.'))
-            return redirect('login')
+            user = form.save()
+            login(request, user)
+            messages.success(request, _('Account created successfully! Welcome, %(username)s!') % {'username': user.username})
+            return redirect('home')
     else:
         form = UserRegisterForm()
     return render(request, 'blog/register.html', {'form': form})
