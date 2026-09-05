@@ -12,18 +12,18 @@
 ## 🛠 Tech Stack
 * **Frontend:** Modern responsive web stack.
 * **Design:** Minimalistic dark mode with backdrop blur effects.
-
 ## 📸 Screenshots
 
 ### 💻 Desktop View
-<img width="332" height="587" alt="image" src="https://github.com/user-attachments/assets/8c4aa065-a36a-4258-b3b1-d18cf3a40291" /> 
-Desktop version optimized for computers, featuring a clean dark theme and blur effects.
-### 📱 Mobile View
 <img width="1907" height="939" alt="image" src="https://github.com/user-attachments/assets/8ef5ee7a-d7ab-42a8-affa-0edef82115c7" />
-Mobile view adapted for smartphones and tablets for smooth browsing on the go.
 
+**Desktop version optimized for computers, featuring a clean dark theme and blur effects.**
 
+### 📱 Mobile View
+<img width="332" height="587" alt="image" src="https://github.com/user-attachments/assets/8c4aa065-a36a-4258-b3b1-d18cf3a40291" />
+
+**Mobile view adapted for smartphones and tablets for smooth browsing on the go.**
 
 ## 🚀 Getting Started
-Link : https://flux-web-zfap.onrender.com/en/
+Link: https://flux-web-zfap.onrender.com/en/
 
