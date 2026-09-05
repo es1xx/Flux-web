@@ -27,7 +27,7 @@
 ## 🚀 Getting Started(Web)
 Link: https://flux-web-zfap.onrender.com/en/
 
-## 🚀 Running Locally
+## 🌐️ Running Locally
 
 To run this project locally on your machine, follow these steps:
 
