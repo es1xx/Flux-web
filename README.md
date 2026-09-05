@@ -24,6 +24,18 @@
 
 **Mobile view adapted for smartphones and tablets for smooth browsing on the go.**
 
-## 🚀 Getting Started
+## 🚀 Getting Started(Web)
 Link: https://flux-web-zfap.onrender.com/en/
 
+## 🚀 Running Locally
+
+To run this project locally on your machine, follow these steps:
+
+```bash
+git clone [https://github.com/es1xx/Flux-web.git](https://github.com/es1xx/Flux-web.git)
+cd Flux-web
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
