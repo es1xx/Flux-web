@@ -10,8 +10,13 @@
 * **Quick Navigation:** Easy access to search, trending hashtags, and user profiles.
 
 ## 🛠 Tech Stack
-* **Frontend:** Modern responsive web stack.
-* **Design:** Minimalistic dark mode with backdrop blur effects.
+
+* **Backend:** Python, Django
+* **Database:** SQLite
+* **Frontend:** HTML5, CSS3, JavaScript, Bootstrap
+* **Design:** Minimalistic dark mode with backdrop-filter blur (Glassmorphism)
+* **Deployment & Hosting:** Render, Git, GitHub
+* 
 ## 📸 Screenshots
 
 ### 💻 Desktop View
