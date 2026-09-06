@@ -1,5 +1,5 @@
 
-# Flux 🚀
+# ▲ Flux 
 
 **Flux** is a modern and lightweight social network designed to be seamlessly used across computers, phones, and tablets. It is fully optimized for a smooth viewing and browsing experience from any mobile device.
 
@@ -29,7 +29,7 @@
 
 **Mobile view adapted for smartphones and tablets for smooth browsing on the go.**
 
-## 🚀 Getting Started(Web)
+## 🚀 Getting Started (Web)
 Link: https://flux-web-zfap.onrender.com/en/
 
 ## 🌐️ Running Locally
