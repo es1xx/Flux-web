@@ -2,7 +2,7 @@
 # ▲ Flux 
 
 **Flux** is a modern and lightweight social network designed to be seamlessly used across computers, phones, and tablets. It is fully optimized for a smooth viewing and browsing experience from any mobile device.
-
+"I'm fucking don't have enough money for this shit..."
 ## ✨ Features
 * **Cross-Platform:** Works perfectly on desktop computers and mobile screens with responsive design.
 * **Feed & Posts:** Share moments, upload photos, and interact with the community.
